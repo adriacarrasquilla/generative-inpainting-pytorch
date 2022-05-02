@@ -91,7 +91,8 @@ def main():
                 netG = Generator(config['netG'], cuda, device_ids)
                 # Resume weight
                 last_model_name = get_model_list(checkpoint_path, "gen", iteration=args.iter)
-                netG.load_state_dict(torch.load(last_model_name))
+                last_model_name = "torch_model.p"
+                netG.load_state_dict(torch.load(last_model_name, map_location=torch.device('cpu')))
                 model_iteration = int(last_model_name[-11:-3])
                 print("Resume from {} at iteration {}".format(checkpoint_path, model_iteration))
 

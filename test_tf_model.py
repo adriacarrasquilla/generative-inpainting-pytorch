@@ -32,11 +32,11 @@ def main():
     trainer.eval()
 
     image = imageio.imread(args.image)
-    image = torch.FloatTensor(image).permute(2, 0, 1).unsqueeze(0).cuda()
+    image = torch.FloatTensor(image).permute(2, 0, 1).unsqueeze(0)  # .cuda()
     mask = imageio.imread(args.mask)
-    mask = (torch.FloatTensor(mask[:, :, 0]) / 255).unsqueeze(0).unsqueeze(0).cuda()
+    mask = (torch.FloatTensor(mask[:, :, 0]) / 255).unsqueeze(0).unsqueeze(0)  # .cuda()
 
-    x = (image / 127.5 - 1) * (1 - mask).cuda()
+    x = (image / 127.5 - 1) * (1 - mask)  # .cuda()
     with torch.no_grad():
         _, result, _ = trainer.netG(x, mask)
 
